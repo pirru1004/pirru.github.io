@@ -1,0 +1,595 @@
+```html
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <!--
+    index.html — One-page personal site for an ISU student.
+    Built to the user's brief. All in one file. No external CSS/JS besides Bootstrap & Bootstrap Icons CDNs.
+    Notes for you to edit later:
+    - Put your CV as /cv.pdf in the repo root to enable the "Open CV" button.
+    - Add a profile image named /profile.jpg (or change the filename below).
+    - Update project demo/code links if/when you have them.
+    - Review the email address and links in the Contact/About sections.
+  -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>David Roberto Guevara Razo — ISU MSS Student</title>
+  <meta name="description" content="ISU MSS student exploring space systems and AI with a Salesforce engineering background. Unofficial student page." />
+  <meta name="author" content="David Roberto Guevara Razo" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="David Roberto Guevara Razo — ISU MSS Student" />
+  <meta property="og:description" content="ISU MSS student exploring space systems and AI with a Salesforce engineering background. Unofficial student page." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="profile.jpg" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="theme-color" content="#0b3d91" />
+  <!-- Bootstrap 5 & Icons via jsDelivr (required by the brief) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --isu-blue:#0b3d91;
+      --isu-gold:#f0b429;
+      --isu-ink:#0d1b2a;
+      --isu-sky:#e6f1ff;
+      --bg-soft: #0b3d9110; /* translucent blue tint */
+      --card-border: #0b3d9140;
+      --text-ink: #0d1b2a;
+    }
+    /* Dark mode tokens adjust with data-bs-theme */
+    [data-bs-theme="dark"]{
+      --isu-sky:#0b1e3f; /* deep sky for dark */
+      --bg-soft:#0b3d9133;
+      --card-border:#ffffff26;
+      --text-ink:#e6f1ff;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      .motion-safe{ transition:none !important; }
+    }
+
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--isu-ink);
+    }
+
+    /* Skip link */
+    .skip-link{
+      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus{
+      position:fixed; left:1rem; top:1rem; width:auto; height:auto; z-index:2000;
+      background: var(--isu-gold); color:#000; padding:.5rem .75rem; border-radius:.375rem;
+      box-shadow:0 0 0 .25rem rgba(0,0,0,.2);
+    }
+
+    /* Navbar */
+    .navbar{
+      backdrop-filter: saturate(120%) blur(6px);
+      background: color-mix(in oklab, var(--isu-sky) 20%, transparent);
+      border-bottom:1px solid var(--card-border);
+    }
+    .navbar-brand{
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+    .nav-link.active{
+      color: var(--isu-gold) !important;
+    }
+
+    /* Hero */
+    .hero{
+      background:
+        radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--isu-blue) 25%, transparent), transparent 60%),
+        radial-gradient(800px 400px at 90% 10%, color-mix(in oklab, var(--isu-gold) 20%, transparent), transparent 60%);
+      border-bottom:1px solid var(--card-border);
+    }
+    .badge-focus{
+      background: var(--bg-soft);
+      border:1px solid var(--card-border);
+      color: var(--text-ink);
+    }
+
+    /* Cards & sections */
+    section{
+      scroll-margin-top: 5rem; /* for anchor focus under sticky nav */
+    }
+    .card{
+      border:1px solid var(--card-border);
+      background: color-mix(in oklab, var(--isu-sky) 12%, transparent);
+    }
+    .section-title{
+      border-left: .4rem solid var(--isu-blue);
+      padding-left:.6rem;
+      margin-bottom:1rem;
+    }
+
+    /* Timeline */
+    .timeline{
+      position:relative;
+      margin-left:1rem;
+      padding-left:1.25rem;
+    }
+    .timeline::before{
+      content:"";
+      position:absolute; left:0.3rem; top:0; bottom:0;
+      width:2px; background: var(--card-border);
+    }
+    .tl-item{
+      position:relative;
+      margin-bottom:1.25rem;
+    }
+    .tl-item::before{
+      content:"";
+      position:absolute; left:-.05rem; top:.25rem;
+      width:.75rem; height:.75rem; border-radius:50%;
+      background: var(--isu-blue);
+      border:2px solid color-mix(in oklab, var(--isu-sky) 25%, transparent);
+      box-shadow:0 0 0 3px color-mix(in oklab, var(--isu-blue) 20%, transparent);
+    }
+
+    /* Footer */
+    footer{
+      border-top:1px solid var(--card-border);
+      background: color-mix(in oklab, var(--isu-sky) 10%, transparent);
+    }
+
+    /* Buttons accent */
+    .btn-isu{
+      --bs-btn-bg: var(--isu-blue);
+      --bs-btn-border-color: var(--isu-blue);
+      --bs-btn-hover-bg: color-mix(in oklab, var(--isu-blue) 85%, black);
+      --bs-btn-hover-border-color: color-mix(in oklab, var(--isu-blue) 85%, black);
+      --bs-btn-active-bg: color-mix(in oklab, var(--isu-blue) 75%, black);
+      --bs-btn-active-border-color: color-mix(in oklab, var(--isu-blue) 75%, black);
+      --bs-btn-color:#fff;
+    }
+    .btn-gold{
+      --bs-btn-bg: var(--isu-gold);
+      --bs-btn-border-color: var(--isu-gold);
+      --bs-btn-hover-bg: color-mix(in oklab, var(--isu-gold) 85%, black);
+      --bs-btn-hover-border-color: color-mix(in oklab, var(--isu-gold) 85%, black);
+      --bs-btn-active-bg: color-mix(in oklab, var(--isu-gold) 75%, black);
+      --bs-btn-active-border-color: color-mix(in oklab, var(--isu-gold) 75%, black);
+      --bs-btn-color:#000;
+    }
+
+    /* Utility */
+    .small-note{ opacity:.8; font-size:.95rem; }
+    .icon-inline{ vertical-align:-.125rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg sticky-top" aria-label="Main navigation">
+      <div class="container">
+        <a class="navbar-brand text-uppercase" href="#top" aria-label="Home">
+          <i class="bi bi-rocket-takeoff-fill me-1"></i>DG
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navMain" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+            <li class="nav-item"><a class="nav-link" href="#cv">CV</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+          <div class="ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center gap-2">
+            <button id="themeToggle" class="btn btn-sm btn-outline-light" type="button" aria-label="Toggle color theme">
+              <i class="bi bi-moon-stars-fill me-1"></i><span class="d-none d-sm-inline">Theme</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero py-5" id="top">
+      <div class="container py-4">
+        <div class="row align-items-center g-4">
+          <div class="col-md-8">
+            <h1 class="display-5 fw-bold">David Roberto Guevara Razo</h1>
+            <p class="lead mb-3">ISU MSS student exploring space systems &amp; AI — Salesforce solution engineer by trade.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="#projects" class="btn btn-isu btn-lg"><i class="bi bi-kanban me-2"></i>Projects</a>
+              <a href="#cv" class="btn btn-outline-light btn-lg"><i class="bi bi-file-earmark-text me-2"></i>CV</a>
+              <a href="#contact" class="btn btn-gold btn-lg"><i class="bi bi-envelope-at me-2"></i>Contact</a>
+            </div>
+            <p class="mt-3 small-note">
+              <i class="bi bi-shield-lock-fill me-1"></i>
+              Unofficial student page. “International Space University” named here for study use only.
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <figure class="m-0">
+              <img id="profileImg" src="profile.jpg" alt="Profile photo of David" class="img-fluid rounded-4 border" style="max-height:260px;object-fit:cover;">
+              <figcaption id="profileNote" class="small mt-2 small-note">Add <code>profile.jpg</code> to show a photo.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- About -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">About</h2>
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card p-3 p-md-4">
+              <p class="mb-2">
+                I am a Master in Space Studies (MSS 2025–2026) student in Strasbourg, France. I bring 5+ years in Salesforce consulting across Latin America. I like clear systems, useful bots, and human-friendly tools.
+              </p>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <h3 class="h6 text-uppercase text-secondary">Focus</h3>
+                  <div class="d-flex flex-wrap gap-2">
+                    <span class="badge rounded-pill badge-focus">Space systems &amp; ops</span>
+                    <span class="badge rounded-pill badge-focus">AI for CX</span>
+                    <span class="badge rounded-pill badge-focus">Digital engagement</span>
+                    <span class="badge rounded-pill badge-focus">Data architecture &amp; quality</span>
+                    <span class="badge rounded-pill badge-focus">Space sustainability</span>
+                    <span class="badge rounded-pill badge-focus">Human factors</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h3 class="h6 text-uppercase text-secondary">Tools</h3>
+                  <div class="d-flex flex-wrap gap-2">
+                    <span class="badge rounded-pill badge-focus">Salesforce (Service/Marketing/Experience)</span>
+                    <span class="badge rounded-pill badge-focus">Einstein Agentforce</span>
+                    <span class="badge rounded-pill badge-focus">Data Cloud</span>
+                    <span class="badge rounded-pill badge-focus">OmniStudio &amp; Flows</span>
+                    <span class="badge rounded-pill badge-focus">Apex</span>
+                    <span class="badge rounded-pill badge-focus">Python</span>
+                    <span class="badge rounded-pill badge-focus">Tableau</span>
+                    <span class="badge rounded-pill badge-focus">GitHub</span>
+                    <span class="badge rounded-pill badge-focus">Lucidchart</span>
+                    <span class="badge rounded-pill badge-focus">Jupyter</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                  <h3 class="h6 text-uppercase text-secondary">Languages</h3>
+                  <p class="mb-0">Spanish (native), English (fluent), French (learning)</p>
+                </div>
+                <div class="col-md-6">
+                  <h3 class="h6 text-uppercase text-secondary">Location</h3>
+                  <p class="mb-0">Strasbourg, France</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Quick links (optional, shown if filled) -->
+          <div class="col-lg-4">
+            <div class="card p-3 p-md-4 h-100">
+              <h3 class="h6 text-uppercase text-secondary">Links</h3>
+              <ul class="list-unstyled mb-0" id="linkList">
+                <!-- Fill these anchors with your links; empty ones will be auto-hidden -->
+                <li class="mb-2"><i class="bi bi-github me-2"></i><a id="githubLink" href="" rel="me" target="_blank">GitHub</a></li>
+                <li class="mb-2"><i class="bi bi-linkedin me-2"></i><a id="linkedinLink" href="" rel="me" target="_blank">LinkedIn</a></li>
+                <li class="mb-2"><i class="bi bi-globe2 me-2"></i><a id="otherLink" href="" target="_blank" rel="noopener">Portfolio</a></li>
+              </ul>
+              <p class="small small-note mt-3 mb-0">Empty links are hidden automatically.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">Projects</h2>
+        <div class="row g-4">
+          <!-- Project 1 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div class="card-body d-flex flex-column">
+                <h3 class="h5">Xcaret — Einstein Agentforce rollout (LATAM)</h3>
+                <p class="mb-2">Pilot to improve guest support with an AI-assisted bot on messaging. Faster replies, clearer routes.</p>
+                <ul class="mb-3">
+                  <li><strong>Tools:</strong> Salesforce Service Cloud, Einstein Agentforce, WhatsApp</li>
+                  <li><strong>Method:</strong> Omni-Channel + bot flows with guardrails</li>
+                  <li><strong>Outcome:</strong> First LATAM pilot; reduced time to first response</li>
+                </ul>
+                <div class="mt-auto d-flex gap-2">
+                  <a class="btn btn-sm btn-outline-light project-demo" href="" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>Demo</a>
+                  <a class="btn btn-sm btn-outline-light project-code" href="" target="_blank" rel="noopener"><i class="bi bi-code-slash me-1"></i>Code</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Project 2 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div class="card-body d-flex flex-column">
+                <h3 class="h5">Automotive test-drive bot</h3>
+                <p class="mb-2">Self-service scheduling over WhatsApp. Clear status updates for service tickets.</p>
+                <ul class="mb-3">
+                  <li><strong>Tools:</strong> WhatsApp Business, Salesforce Digital Engagement</li>
+                  <li><strong>Method:</strong> Flow-driven messages, verified routing</li>
+                  <li><strong>Outcome:</strong> Lower call volume; more kept test drives</li>
+                </ul>
+                <div class="mt-auto d-flex gap-2">
+                  <a class="btn btn-sm btn-outline-light project-demo" href="" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>Demo</a>
+                  <a class="btn btn-sm btn-outline-light project-code" href="" target="_blank" rel="noopener"><i class="bi bi-code-slash me-1"></i>Code</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Project 3 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+              <div class="card-body d-flex flex-column">
+                <h3 class="h5">Iberdrola MX — ESG / I-REC strategy brief</h3>
+                <p class="mb-2">Study on renewable certificates, traceability, and stakeholder comms for Mexico projects.</p>
+                <ul class="mb-3">
+                  <li><strong>Data:</strong> I-REC registries, public reports</li>
+                  <li><strong>Method:</strong> Stakeholder map, KPI framework</li>
+                  <li><strong>Outcome:</strong> Roadmap for clean energy claims</li>
+                </ul>
+                <div class="mt-auto d-flex gap-2">
+                  <a class="btn btn-sm btn-outline-light project-demo" href="" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>Demo</a>
+                  <a class="btn btn-sm btn-outline-light project-code" href="" target="_blank" rel="noopener"><i class="bi bi-code-slash me-1"></i>Code</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="small small-note mt-3 mb-0"><i class="bi bi-info-circle me-1"></i>Buttons hide if no links are set.</p>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">Experience</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <h3 class="h6 mb-1">MSS Student — International Space University</h3>
+            <p class="mb-1 text-secondary">Strasbourg, France • 2025–2026</p>
+            <p class="mb-0">Team projects across space systems, human factors, and policy. Clear, hands-on outcomes.</p>
+          </div>
+          <div class="tl-item">
+            <h3 class="h6 mb-1">Solution Engineer (Salesforce) — The Ksquare Group</h3>
+            <p class="mb-1 text-secondary">Remote / LATAM • 2021–present</p>
+            <p class="mb-0">Built digital engagement, bots, and data flows. Focus on service speed and usability.</p>
+          </div>
+          <div class="tl-item">
+            <h3 class="h6 mb-1">Business Analyst — Xcaret (Einstein Agentforce)</h3>
+            <p class="mb-1 text-secondary">Mexico • 2024–2025</p>
+            <p class="mb-0">Led first LATAM bot pilot with guardrails, content, and routing. Faster first response.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">CV</h2>
+        <div class="card p-3 p-md-4">
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <a id="cvBtn" href="cv.pdf" target="_blank" class="btn btn-isu d-none">
+              <i class="bi bi-file-earmark-arrow-down me-1"></i>Open CV
+            </a>
+            <span id="cvNote" class="small small-note">
+              Add <code>cv.pdf</code> to the repo root to enable the button.
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">Contact</h2>
+        <div class="card p-3 p-md-4">
+          <p class="mb-2"><i class="bi bi-at me-2"></i><span id="email">david.guevara.razo@gmail.com</span></p>
+          <div class="d-flex flex-wrap gap-2">
+            <a id="mailLink" class="btn btn-isu" href="mailto:david.guevara.razo@gmail.com">
+              <i class="bi bi-envelope-fill me-1"></i>Email
+            </a>
+            <button id="copyEmailBtn" class="btn btn-outline-light" type="button">
+              <i class="bi bi-clipboard2-check me-1"></i>Copy email
+            </button>
+          </div>
+          <p class="small small-note mt-3 mb-0"><i class="bi bi-exclamation-circle me-1"></i>This email is public. Edit it in the file if needed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Edit Checklist -->
+    <section id="edit-checklist" class="py-5">
+      <div class="container">
+        <h2 class="section-title h3">Edit Checklist</h2>
+        <ol class="mb-0">
+          <li>Place <code>cv.pdf</code> at the repo root (or keep the note).</li>
+          <li>Add <code>profile.jpg</code> (1200×1200 works well).</li>
+          <li>Update email and add your GitHub/LinkedIn links.</li>
+          <li>Fill demo/code links for projects.</li>
+          <li>Proofread text and dates.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-4">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+      <p class="mb-0 small">
+        <i class="bi bi-c-circle me-1"></i><span id="year"></span> David Roberto Guevara Razo
+      </p>
+      <p class="mb-0 small small-note">
+        Unofficial student page. “International Space University” named here for study use only.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JSON-LD Person (optional SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "David Roberto Guevara Razo",
+    "email": "mailto:david.guevara.razo@gmail.com",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "International Space University",
+      "address": "Strasbourg, France"
+    },
+    "knowsLanguage": ["es", "en", "fr"],
+    "url": "",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Single script block for all JS behavior -->
+  <script>
+    (function(){
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeToggle');
+      const yearEl = document.getElementById('year');
+      const emailSpan = document.getElementById('email');
+      const mailLink = document.getElementById('mailLink');
+      const copyBtn = document.getElementById('copyEmailBtn');
+      const profileImg = document.getElementById('profileImg');
+      const profileNote = document.getElementById('profileNote');
+      const cvBtn = document.getElementById('cvBtn');
+      const cvNote = document.getElementById('cvNote');
+
+      // 0) Active link highlight on scroll
+      const navLinks = Array.from(document.querySelectorAll('.navbar .nav-link'));
+      const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const setActive = () => {
+        const y = window.scrollY + 90;
+        let currentId = null;
+        for(const sec of sections){
+          if(y >= sec.offsetTop) currentId = sec.id;
+        }
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+currentId));
+      };
+      document.addEventListener('scroll', setActive, {passive:true});
+      setTimeout(setActive, 100);
+
+      // 1) Current year
+      yearEl.textContent = new Date().getFullYear();
+
+      // 2) Theme toggle (persisted)
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = stored || 'dark'; // default to dark as requested
+      root.setAttribute('data-bs-theme', initial);
+      updateThemeMeta(initial);
+
+      themeBtn.addEventListener('click', () => {
+        const current = root.getAttribute('data-bs-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-bs-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeMeta(next);
+        themeBtn.blur();
+      });
+
+      function updateThemeMeta(mode){
+        const meta = document.querySelector('meta[name="theme-color"]');
+        meta && meta.setAttribute('content', mode === 'dark' ? '#0b3d91' : '#e6f1ff');
+        themeBtn.innerHTML = (mode === 'dark'
+          ? '<i class="bi bi-sun-fill me-1"></i><span class="d-none d-sm-inline">Theme</span>'
+          : '<i class="bi bi-moon-stars-fill me-1"></i><span class="d-none d-sm-inline">Theme</span>'
+        );
+      }
+
+      // 3) Profile image presence note
+      profileImg.addEventListener('error', () => {
+        profileNote.classList.remove('d-none');
+        profileImg.classList.add('d-none');
+      });
+      profileImg.addEventListener('load', () => {
+        profileNote.classList.add('d-none');
+      });
+
+      // 4) Hide empty external links
+      ['githubLink','linkedinLink','otherLink'].forEach(id => {
+        const a = document.getElementById(id);
+        if(!a) return;
+        if(!a.getAttribute('href') || a.getAttribute('href').trim() === '' ){
+          a.parentElement.classList.add('d-none');
+        }
+      });
+
+      // 5) Projects: hide buttons with empty URLs
+      document.querySelectorAll('.project-demo, .project-code').forEach(a=>{
+        if(!a.getAttribute('href') || a.getAttribute('href').trim() === ''){
+          a.classList.add('d-none');
+        }
+      });
+
+      // 6) Contact helpers (mailto and copy)
+      const email = emailSpan.textContent.trim();
+      mailLink.setAttribute('href', 'mailto:' + email);
+
+      copyBtn.addEventListener('click', async () => {
+        try{
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            await navigator.clipboard.writeText(email);
+          }else{
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = email;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          const prev = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="bi bi-check2-circle me-1"></i>Copied!';
+          setTimeout(()=>copyBtn.innerHTML = prev, 1500);
+        }catch(e){
+          console.warn('Copy failed', e);
+        }
+      });
+
+      // 7) CV check (HEAD cv.pdf). If found, show button; else show note. Fail silently if blocked.
+      (async () => {
+        try{
+          const res = await fetch('cv.pdf', { method:'HEAD', cache:'no-store' });
+          if(res && (res.ok || res.status === 0)){ // status 0 in some opaque cases
+            cvBtn.classList.remove('d-none');
+            cvNote.classList.add('d-none');
+          }else{
+            cvBtn.classList.add('d-none');
+            cvNote.classList.remove('d-none');
+          }
+        }catch(_e){
+          // Likely blocked or not present. Keep the note visible.
+          cvBtn.classList.add('d-none');
+          cvNote.classList.remove('d-none');
+        }
+      })();
+    })();
+  </script>
+
+  <!-- Bootstrap Bundle JS (no jQuery) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+```
